@@ -2,7 +2,7 @@
     <div class="row no-gutters">
       <div class="col-3">
         <%= link_to view_profile_path(current_user.id), method: :get do %>
-          <img class="card-img" src="<%= profile_pic(@profile.handle) %>" alt="">
+          <img class="card-img" src="<%#= profile_pic&(@profile&.handle) %>" alt="">
         <% end %>
       </div>
       <div class="col-9">
