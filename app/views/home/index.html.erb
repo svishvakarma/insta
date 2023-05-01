@@ -1,0 +1,63 @@
+<div class="container">
+  <%= link_to :new_post, method: :get do %>
+    <div class="btn btn-secondary btn-sm">New Post</div>
+  <% end %>
+
+  <%= link_to :destroy_user_session, method: :delete do %>
+    <div class="btn btn-secondary btn-sm">Log out</div>
+  <% end %>
+
+  <%= link_to view_profile_path(current_user.id), method: :get do %>
+    <div class="btn btn-secondary btn-sm">Profile</div>
+  <% end %>
+
+  <%= link_to :view_all, method: :get do %>
+    <div class="btn btn-secondary btn-sm">All profiles</div>
+  <% end %>
+</div>
+
+<div class="container row">
+<div class="col-lg-8">
+  <% @post.each do |p| %>
+    <div class="card post rounded-sm bg-white">
+      <div class="card-header font-weight-bold">
+        <%= link_to view_profile_path(p.user_id), method: :get do %>
+          <%= p.user.profile.handle %>
+        <% end %>
+      </div>
+      <img class="card-img-top" src="/insta-logo.png" alt="">
+      <div class="card-body border-bottom">
+        <div class="card-text">
+          <div id="like-<%= p.id %>">
+            <%= render 'likes/like_button.html.erb', post_id: p.id %>
+          </div>
+        </div>
+        <div class="card-text">
+          <span class="font-weight-bold"><%= p.user.profile.handle %></span> <%= p.caption %>
+        </div>
+        <div class="card-text" id="comment-<%= p.id %>">
+          <% p.comments.each do |c| %>
+            <div>
+              <span class="font-weight-bold"><%= current_user.profile.handle %></span> <%= c.text %>
+            </div>
+          <% end %>
+        </div>
+        <h6 class="mb-2 text-muted">
+          <% if p.created_at != nil %>
+            <%= distance_of_time_in_words_to_now(p.created_at) %> ago
+          <% end %>
+        </h6>
+      </div>
+      <%= form_for :comment, url: comments_path(), remote: true, html: { class: 'input-group' } do |f| %>
+        <%= f.text_field :text, placeholder: 'Add a comment...', class: 'form-control border-0' %>
+        <%= hidden_field_tag :post_id, p.id %>
+        <%= f.submit 'Post', class: 'btn' %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="col-lg-4">
+  <%= render 'profile/show_mini' %>
+</div>
+</div>
