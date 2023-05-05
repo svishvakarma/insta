@@ -10,7 +10,7 @@
           <div class="card-body border-bottom">
             <div class="card-text">
               <span id="like-<%= p.id %>">
-                <%= render 'likes/like_button.html.erb', post_id: p.id %>
+                <%= render 'like/like_button.html.erb', post_id: p.id %>
               </span>
               <span>
                 <% if self_profile(params[:id]) %>  
@@ -24,7 +24,7 @@
               </span>
             </div>
             <div class="card-text">
-              <span class="font-weight-bold"><%= p.user.profile.handle %></span> <%= p.caption %>
+              <span class="font-weight-bold"><%= p.user&.profile&.handle %></span> <%= p.caption %>
             </div>
             <div class="card-text" id="comment-<%= p.id %>">
               <% p.comments.each do |c| %>

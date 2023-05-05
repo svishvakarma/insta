@@ -22,18 +22,18 @@
     <div class="card post rounded-sm bg-white">
       <div class="card-header font-weight-bold">
         <%= link_to view_profile_path(p.user_id), method: :get do %>
-          <%= p.user.profile.handle %>
+          <%= p.user&.profile&.handle %>
         <% end %>
       </div>
       <img class="card-img-top" src="/insta-logo.png" alt="">
       <div class="card-body border-bottom">
         <div class="card-text">
           <div id="like-<%= p.id %>">
-            <%= render 'likes/like_button.html.erb', post_id: p.id %>
+            <%= render "likes/like_button", post_id: p.id %>
           </div>
         </div>
         <div class="card-text">
-          <span class="font-weight-bold"><%= p.user.profile.handle %></span> <%= p.caption %>
+          <span class="font-weight-bold"><%= p.user&.profile&.handle %></span> <%= p.caption %>
         </div>
         <div class="card-text" id="comment-<%= p.id %>">
           <% p.comments.each do |c| %>
